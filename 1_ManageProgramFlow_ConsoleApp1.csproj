@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CancelingTasks_Examples.cs" />
+    <Compile Include="EventCallback_Examples.cs" />
     <Compile Include="Interlock_Example.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
