@@ -9,6 +9,8 @@ namespace _1_ManageProgramFlow_ConsoleApp1
    {
       static void Main(string[] args)
       {
+         CancelingTasks_Examples.DoTest();
+         Interlock_Example.DoTest();
       }
    }
 }
