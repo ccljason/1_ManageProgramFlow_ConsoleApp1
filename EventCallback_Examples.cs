@@ -14,10 +14,19 @@ namespace _1_ManageProgramFlow_ConsoleApp1
          Pub p = new Pub();
          try
          {
-            p.OnChange += (sender, e) => Console.WriteLine("1: event raised:{0}", e.Value);
-            p.OnChange += (sender, e) => { throw new Exception("2: event exception!!!"); };
-            p.OnChange += (sender, e) => Console.WriteLine("3: event raised:{0}", e.Value);
+            p.OnChange += new Observor_Log("1").RespondChange;
+            p.OnChange += new Observor_Log("2").RespondChange;
+            p.OnChange += new Observor_Log("3").RespondChange;
+
+            //p.OnChange += (sender, e) => Console.WriteLine("1: event raised:{0}", e.Value);
+            //p.OnChange += (sender, e) => { throw new Exception("2: event exception!!!"); };
+            //p.OnChange += (sender, e) => Console.WriteLine("3: event raised:{0}", e.Value);
+
+            p.Raise(1);
+            p.Raise(2);
+            p.Raise(0);
             p.Raise(10);
+            p.Raise(-100);
          }
          catch (AggregateException ex)
          {
@@ -65,6 +74,33 @@ namespace _1_ManageProgramFlow_ConsoleApp1
          if (exceptions.Any())
          {
             throw new AggregateException(exceptions);
+         }
+      }
+   }
+
+   public class Observor_Log
+   {
+      public Observor_Log(string name)
+      {
+         _name = name;
+      }
+
+      private string _name = string.Empty;
+      public string Name
+      {
+         get { return _name; }
+         set { _name = value; }
+      }
+
+      public void RespondChange(object sender, MyArgs data)
+      {
+         switch (data.Value)
+         {
+            case 0:
+               throw new Exception(string.Format("{0}: event exception!!!", Name));
+            default:
+               Console.WriteLine("{0}: event raised:{1}", Name, data.Value);
+               break;
          }
       }
    }
